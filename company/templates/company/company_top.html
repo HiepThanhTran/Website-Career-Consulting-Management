@@ -1,0 +1,90 @@
+{% extends 'layout/base_hf.html' %}
+
+{% block title %} Danh sách top công ty {% endblock %}
+
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'company/css/company_top.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'company/css/style.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <!-- phần nội dung -->
+    <section>
+        <!-- header tìm kiếm -->
+        <div class="box_search_company">
+            <div class="container">
+                <div class="box_search">
+                    <ul class="box_search_header ">
+                        <li><a href="{% url 'company_list' %}" class="text">Danh sách công ty</a></li>
+                        <li>
+                            <a href="javascript:void(0)" class="text" style="border-bottom: 2px solid black; padding-bottom: 10px;">Top công
+                                ty</a>
+                        </li>
+                    </ul>
+                    <div class="caption">
+                        <h2 class="Title" style="color: var(--light-blue);">Khám phá 100.000+ công ty nổi bật</h2>
+                        <p class="description" style="font-size:16px ; margin-top: 20px;">Tra cứu thông tin công ty và tìm kiếm nơi làm việc
+                            tốt
+                            nhất dành cho bạn</p>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Nhập tên công ty">
+                        <button class="btn btn-success" type="submit">Tìm kiếm</button>
+                    </div>
+                </div>
+                <div class="box_image">
+                    <img src="{% static 'company/images/team.svg' %}" alt="Hình ảnh tuyển dụng">
+                </div>
+            </div>
+        </div>
+        <!--Nội dung danh sách-->
+        <div class="company">
+            <div class="company_header">
+                <h2>Danh sách các Top công ty</h2>
+            </div>
+            <div class="container">
+                <!-- Cột -->
+                <div class="row" style="margin-bottom: 20px;">
+                    {% for company in companies %}
+                    <div class="col-4 mt-2">
+                        <!-- card -->
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="{{ company.account.avatar }}"
+                                 alt="{{ company.company_name }}">
+                            <div class="card-body">
+                                <h4 class="card-title"><strong>{{ company.company_name }}</strong></h4>
+                                <div class="card-text">{{ company.description|safe }}</div>
+                                <a href="{% url 'company_detail' company.account.id %}" class="btn btn-primary">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- nav slider -->
+            <div class="nav_company">
+                <ul class="nav_next_prev">
+                    <li>
+                        <button type="button" class="btn btn-light"><a href="#"><img src="{% static 'company/images/prev.svg' %}"
+                                                                                     alt=""></a>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn buttonStyle" style="background-color: var(--main-blue);"><a href="#">1</a></button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-light"><a href="#">2</a></button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-light"><a href="#"><img src="{% static 'company/images/next.svg' %}"
+                                                                                     alt=""></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+    </section>
+{% endblock %}

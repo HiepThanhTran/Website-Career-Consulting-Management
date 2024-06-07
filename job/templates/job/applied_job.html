@@ -1,0 +1,115 @@
+{% extends 'layout/base_hf.html' %}
+
+{% block title %} Công việc đã ứng tuyển {% endblock %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'job/css/reset.css' %}" type="text/css"/>
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'job/css/applied_job.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'job/css/style.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'company/css/company_detail.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <section style="padding: 0;">
+        <div class="box d-flex ">
+            <div class="box__left col-8">
+                <div class="jobapply">
+                    <div class="jobapply__tittle">
+                        <h3>Công việc đã ứng tuyển</h3>
+                    </div>
+                    {% if not jas %}
+                        <div class="jobapply__head__applied pt-3">
+                            <img src="{% static 'job/images/lsut/1.png' %}" alt="">
+                            <p class="fw-bold pt-4">Bạn chưa ứng tuyển công việc nào!!!</p>
+                            <p>Bắt đầu sự nghiệp mơ ước với hàng nghìn việc làm chất lượng tại BlueCC</p>
+                            <button type="button" class="btn btn-info mt-4"><a href="{% url 'search_job' %}">Tìm việc ngay</a></button>
+                        </div>
+                    {% else %}
+                        {% for ja in jas %}
+                            <div class="jobapply__head__applied">
+                                <div class="recruitment-item" style="margin: 0">
+                                    <div class="avatar">
+                                        <img src="{{ ja.job.company.account.avatar }}" alt="{{ ja.job.company.company_name }}">
+                                    </div>
+                                    <div class="body">
+                                        <div class="body_content">
+                                            <div>
+                                                <div class="wage_title title">
+                                                    <a href="{% url 'detail_job' ja.job.id %}" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                        {{ ja.job.name }}
+                                                    </a>
+                                                    <p class="text">{{ ja.job.salary_start }} - {{ ja.job.salary_end }} triệu</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="body_infor ">
+                                            <div class="lable_list">
+                                                <div class="list-group list-group-horizontal">
+                                                    {% load filter %}
+                                                    <a href="{% url 'detail_job' ja.job.id %}"
+                                                       class="list-group-item list-group-item-action list-group-item-secondary">
+                                                        {{ ja.job.updated_date|hours_since_updated }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="body_infor-icon">
+                                                <a href="{% url 'detail_job' ja.job.id %}">
+                                                    <button type="button" class="btn btn-primary">Xem</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="box__right col-4">
+                <div class="profile">
+                    <div class="profile-info d-flex">
+                        <img src="{{ request.user.avatar }}" alt="Avatar của
+                                {% if request.user.user.full_name %}
+                                    {{ request.user.user.full_name }}"
+                        {% else %}
+                            {{ request.user.company.company_name }}
+                        {% endif %}
+                             class="align-self-center"/>
+                        <div class="container pt-3">
+                            <p>Chào bạn,</p>
+                            <p class="fw-bold">{{ request.user.user.full_name }}</p>
+
+                            {% if user_email_verified %}
+                                <span class="text-secondary d-block medium-text text-success">Tài khoản đã xác thực</span>
+                            {% elif request.user.is_superuser %}
+                                <span class="text-secondary d-block medium-text text-info">Tài khoản Admin</span>
+                            {% else %}
+                                <span class="text-secondary d-block medium-text text-danger">Tài khoản chưa được xác thực</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!---------------->
+                    <div class="container">
+                        <p class="small-text"><i class="fa fa-check-circle" aria-hidden="true"
+                                                 style="color: #38aecc;"></i> Nhắn tin qua Blue Connect trên BlueCC</p>
+                        <p class="small-text"><i class="fa fa-check-circle" aria-hidden="true"
+                                                 style="color: #38aecc"></i> Email và Số điện thoại của bạn</p>
+                    </div>
+                    <img class="container pt-3" src="{% static 'settings/images/BlueCCCardboard.png' %}" alt="">
+                    <div class="">
+                        <p class="container pt-3 small-text text-secondary">
+                            <i class="fa fa-info-circle" aria-hidden="true" style="color:#38aecc"></i> Bạn cần hoàn
+                            thiện trên 70% CV Profile để bắt đầu tiếp cận với nhà tuyển dụng
+                        </p>
+                    </div>
+                    <a href="#">
+                        <button type="button" class="btn btn-outline-info ms-2">Cập nhật CV</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

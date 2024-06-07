@@ -1,0 +1,62 @@
+{% extends 'layout/base_hf.html' %}
+
+{% block title %}Upload CV{% endblock %}
+
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'cv/css/upload_cv.css' %}">
+{% endblock %}
+
+{% block jsbody %}
+    <script src="{% static 'cv/js/upload_cv.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <div class="row_grid">
+            <div class="col">
+                <form id="cv_form" method="post" enctype="multipart/form-data" action="{% url 'upload_cv' %}">
+                    {% csrf_token %}
+                    <div class="box-upload">
+                        <div class="box-upload__header">
+                            <h1 class="title">Upload CV để các cơ hội việc làm tự tìm đến bạn</h1>
+                            <h2 class="sub-title">Giảm đến 50% thời gian cần thiết để tìm được một công việc phù hợp</h2>
+                        </div>
+
+                        <div class="box-upload__body" style="background: #fff;">
+                            <p class="box-upload__body--des">
+                                Bạn đã có sẵn CV của mình, chỉ cần tải CV lên, hệ thống sẽ tự động đề xuất CV của bạn tới
+                                những nhà tuyển dụng uy tín. Tiết kiệm thời gian, tìm việc thông minh, nắm bắt cơ hội và làm
+                                chủ đường đua nghề nghiệp của chính mình.
+                            </p>
+
+                            <label for="file-upload-cv" class="box-upload-main">
+                                <p class="icon_upload"><i class="fa-solid fa-arrow-up"></i></p>
+                                <div class="not-cv"><label for="file-upload-cv">Bấm để chọn file CV của bạn</label></div>
+                                <img id="preview_cv" width="120px" src="" alt="" style="display: none"/>
+                                <span id="cv_label" style="display: none"></span>
+                            </label>
+                            <input accept="image/jpeg, image/jpg, image/png" type="file" name="file_upload_cv" class="file-upload-cv"
+                                   id="file-upload-cv" style="display: none;">
+
+                            <div class="upload-cv-des">
+                                <div class="file-format">
+                                    <div>Files hỗ trợ: JPG, JPEG, PNG</div>
+                                    <div>File tải lên không quá: 5 MB</div>
+                                </div>
+                            </div>
+
+                            <div class="box-btn-upload">
+                                <label for="cv_form">
+                                    <button form="cv_form" type="submit">Tải CV lên</button>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

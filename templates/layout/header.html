@@ -1,0 +1,149 @@
+{% load static %}
+<header class="header d-flex fixed-top">
+    <div class="header__logo" style="width: 160px;">
+        <img src="{% static 'images/logo/bg_logo.png' %}" alt="" width="100%"/>
+    </div>
+    <nav class="navbar navbar-expand-sm header__navbar">
+        <div class="container-fluid">
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'home' %}">Trang chủ</a>
+                </li>
+                <li class="nav-item hover-parent">
+                    <a class="nav-link" href="javascript:void(0);">Việc làm</a>
+                    <div class="hover-child lg left">
+                        <ul>
+                            <li><a href="{% url 'search_job' %}"><i class="fi fi-rr-search"></i>Tìm việc làm</a></li>
+                            <li><a href="{% url 'saved_job' %}"><i class="fi fi-rs-heart"></i>Việc làm đã lưu</a></li>
+                            <li><a href="{% url 'applied_job' %}"><i class="fi fi-rr-briefcase"></i>Việc làm đã ứng tuyển</a></li>
+                            <li><a href="{% url 'suitable_job' %}"><i class="fi fi-rr-vote-yea"></i>Việc làm phù hợp</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item hover-parent">
+                    <a class="nav-link" href="javascript:void(0);">Hồ sơ & CV</a>
+                    <div class="hover-child left">
+                        <ul>
+                            <li><a href="{% url 'cv' %}"><i class="fi fi-rs-add-document"></i>Quản lí CV</a></li>
+                            <li><a href="{% url 'cv_template' %}"><i class="fi fi-rs-document"></i>Mẫu CV</a></li>
+                            <li><a href="{% url 'cv_major' %}"><i class="fi fi-rs-file-edit"></i>CV theo ngành</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item hover-parent">
+                    <a class="nav-link" href="javascript:void(0);">Công ty</a>
+                    <div class="hover-child left">
+                        <ul>
+                            <li><a href="{% url 'company_list' %}"><i class="fi fi-rs-building"></i>Danh sách công ty</a></li>
+                            <li><a href="{% url 'company_top' %}"><i class="fi fi-rs-stars"></i>Top công ty</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="header__actions d-inline-flex">
+        {% if request.user.is_authenticated %}
+            <div class="actions__noti">
+                <div class="icon"><i class="fi fi-rs-bell"></i></div>
+            </div>
+            <div class="actions__chat">
+                <div class="icon"><i class="fi fi-rr-comment-alt"></i></div>
+            </div>
+            <div class="actions__user hover-parent">
+                <img src="{{ request.user.avatar }}"
+                     alt="Avatar của
+                                 {% if request.user.user.full_name %}
+                                    {{ request.user.user.full_name }}
+                                {% else %}
+                                    {{ request.user.company.company_name }}
+                                {% endif %}"
+                     class="actions__user-avatar"/>
+                <span>
+                    {% if request.user.user.full_name %}
+                        {{ request.user.user.full_name }}
+                    {% else %}
+                        {{ request.user.company.company_name }}
+                    {% endif %}
+                </span>
+                <div class="actions__user-more hover-child lg">
+                    <div class="actions__user-infor d-flex">
+                        <img src="{{ request.user.avatar }}" alt="Avatar của
+                                    {% if request.user.is_superuser %}
+                                        {{ request.user.username }}
+                                    {% elif request.user.user.full_name %}
+                                        {{ request.user.user.full_name }}
+                                    {% else %}
+                                        {{ request.user.company.company_name }}
+                                    {% endif %}"
+                             class="actions__user-avatar"/>
+                        <div class="actions__user-text">
+                            <div class="actions__user-name">
+                                {% if request.user.is_superuser %}
+                                    {{ request.user.username }}
+                                {% elif request.user.user.full_name %}
+                                    {{ request.user.user.full_name }}
+                                {% else %}
+                                    {{ request.user.company.company_name }}
+                                {% endif %}
+                            </div>
+                            <div class="small-text">
+                                Mã ứng viên: <span class="text">#{{ request.user.id }}</span>
+                            </div>
+                            <div class="small-text">{{ request.user.email }}</div>
+                        </div>
+                    </div>
+                    <ul class="actions__user-actions">
+                        {% if request.user.is_superuser %}
+                            <li class="actions__user-action">
+                                <a href="{% url 'company_settings' %}"><i class="fi fi-rr-file-edit"></i>Thông tin doanh nghiệp</a>
+                            </li>
+                            <li class="actions__user-action">
+                                <a href="{% url 'company_recruitment_management' %}"><i class="fa-solid fa-wand-magic-sparkles"></i>Quản lý bài tuyển dụng</a>
+                            </li>
+                            <li class="actions__user-action">
+                                <a href="{% url 'profile_settings' %}"><i class="fi fi-rr-file-edit"></i>Chỉnh sửa thông tin</a>
+                            </li>
+                            <li class="actions__user-action">
+                                <a href="{% url 'job_settings' %}"><i class="fi fi-rs-settings"></i>Cài đặt gợi ý việc làm</a>
+                            </li>
+                        {% elif perms.company.view_company %}
+                            <li class="actions__user-action">
+                                <a href="{% url 'company_settings' %}"><i class="fi fi-rr-file-edit"></i>Thông tin doanh nghiệp</a>
+                            </li>
+                            <li class="actions__user-action">
+                                <a href="{% url 'company_recruitment_management' %}"><i class="fa-solid fa-wand-magic-sparkles"></i>Quản lý bài tuyển dụng</a>
+                            </li>
+                        {% else %}
+                            <li class="actions__user-action">
+                                <a href="{% url 'profile_settings' %}"><i class="fi fi-rr-file-edit"></i>Chỉnh sửa thông tin</a>
+                            </li>
+                            <li class="actions__user-action">
+                                <a href="{% url 'job_settings' %}"><i class="fi fi-rs-settings"></i>Cài đặt gợi ý việc làm</a>
+                            </li>
+                        {% endif %}
+                        <li class="actions__user-action">
+                            <a href="{% url 'password_change' %}"><i class="fi fi-rr-lock"></i>Đổi mật khẩu</a>
+                        </li>
+                        <li class="actions__user-action">
+                            <a href="{% url 'logout' %}"><i class="fi fi-rr-address-card"></i>Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% else %}
+            <div class="buttons d-flex align-items-center">
+                <a href="{% url 'login' %}">
+                    <button class="login-btn">Đăng nhập</button>
+                </a>
+                <a href="{% url 'signup' %}">
+                    <button class="register-btn">Đăng kí</button>
+                </a>
+                <a href="{% url 'company_recruitment_management' %}">
+                    <button class="btn btn-dark">Đăng bài tuyển dụng</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</header>

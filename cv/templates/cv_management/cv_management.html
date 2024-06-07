@@ -1,0 +1,113 @@
+{% extends 'layout/base_hf.html' %}
+
+{% block title %} Quản lý CV {% endblock %}
+
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'cv/css/style.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'cv/css/cv.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    {{ block.super }}
+    <div class="my_alert my_alert--hidden">
+        <div class="alertbox alertbox--info">
+            {% csrf_token %}
+            <div class="alertbox__icon"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="alertbox__title"><h2>Xác thực tài khoản</h2></div>
+            <div class="alertbox__text">Bạn muốn xác thực tài khoản?</div>
+            <div class="alertbox__btn btns">
+                <div onclick="removeAlertBox(); sendVerificationEmail('{{ request.user.email }}');" class="button button--size-s">
+                    Xác thực
+                </div>
+                <div onclick="removeAlertBox();" class="button button--size-s">Huỷ</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8" id="manager-cv">
+                    <a class="banner-manager-cv" href="#">
+                        <img class="img-responsive" src="{% static 'cv/images/banner-manager-cv.png' %}" alt="">
+                    </a>
+                    <div id="cv-upload-list" class="box-block">
+                        {% if not user_email_verified %}<div class="non-verify"></div>{% endif %}
+                        <div class="cv-list-header">
+                            <h4 class="tittle">CV đã tải lên TopCV</h4>
+                            <a class="btn-add-cv" href="{% url 'upload_cv' %}">
+                                <i class="fa-solid fa-upload"></i> Tải CV lên
+                            </a>
+                        </div>
+                        {% if not cvs %}
+                            <div style="text-align: center;">
+                                <img style="width: 120px;" src="{% static 'cv/images/noupload.jpg' %}" alt="">
+                                <p>Bạn chưa tải lên CV nào</p>
+                            </div>
+                        {% else %}
+                            <div class="cv_list">
+                                {% for cv in cvs %}
+                                    <img src="{{ cv.image }}" alt="{{ cv.user.full_name }}"/>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!--Bảng Profile phải-->
+                <div class="col-sm-4">
+                    <div class="profile">
+                        <div class="profile-info d-flex">
+                            <img src="{{ request.user.avatar }}" alt="Avatar của
+                                    {% if request.user.is_superuser %}
+                                        {{ request.user.username }}
+                                    {% elif request.user.user.full_name %}
+                                        {{ request.user.user.full_name }}
+                                    {% else %}
+                                        {{ request.user.company.company_name }}
+                                    {% endif %}"
+                                 class="align-self-center"/>
+                            <div class="container pt-3">
+                                <p style="margin-bottom:0;">Chào bạn,</p>
+                                <p class="fw-bold" style="margin-bottom:0;">
+                                    {% if request.user.is_superuser %}
+                                        {{ request.user.username }}
+                                    {% elif request.user.user.full_name %}
+                                        {{ request.user.user.full_name }}
+                                    {% else %}
+                                        {{ request.user.company.company_name }}
+                                    {% endif %}
+                                </p>
+                                {% if user_email_verified %}
+                                    <span class="text-secondary d-block medium-text text-success">Tài khoản đã xác thực</span>
+                                {% elif request.user.is_superuser %}
+                                    <span class="text-secondary d-block medium-text text-info">Tài khoản Admin</span>
+                                {% else %}
+                                    <span class="text-secondary d-block medium-text text-danger">Tài khoản chưa được xác thực</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!---------------->
+                        <div class="container">
+                            <p class="small-text"><i class="fa fa-check-circle" aria-hidden="true"
+                                                     style="color: #38aecc;"></i> Nhắn tin qua Blue Connect trên BlueCC</p>
+                            <p class="small-text"><i class="fa fa-check-circle" aria-hidden="true"
+                                                     style="color: #38aecc;"></i> Email và Số điện thoại của bạn</p>
+                        </div>
+                        <img class="container pt-3" src="{% static 'cv/images/BlueCCCardboard.png' %}" alt="">
+                        <div class="">
+                            <p class="container pt-3 small-text text-secondary">
+                                <i class="fa fa-info-circle" aria-hidden="true" style="color:#38aecc"></i> Bạn cần hoàn
+                                thiện trên 70% CV Profile để bắt đầu tiếp cận với nhà tuyển dụng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

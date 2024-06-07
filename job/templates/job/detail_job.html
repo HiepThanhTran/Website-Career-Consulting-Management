@@ -1,0 +1,144 @@
+{% extends 'layout/base_hf.html' %}
+
+{% block title %} Tuyển {{ jd.name }} {% endblock %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'job/css/reset.css' %}" type="text/css"/>
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'job/css/style.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'job/css/detail_job.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block jsbody %}
+    <script src="{% static 'job/js/apply_job.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="content d-flex">
+            <div class="content__left col-8">
+                <div class="job">
+                    <h3 class="detail-job-h3">{{ jd.name }}</h3>
+                    <div class="job__desc pt-3 d-flex">
+
+                        <div class="job__desc--item d-flex flex-fill">
+                            <div class=" flex-fill"><i class="fi fi-br-messages-dollar"></i></div>
+                            <div class=" flex-fill">
+                                <p>Mức lương</p>
+                                <span>{{ jd.salary_start }} - {{ jd.salary_end }} triệu</span>
+                            </div>
+                        </div>
+
+                        <div class="job__desc--item d-flex flex-fill">
+                            <div class="flex-fill"><i class="fi fi-sr-marker"></i></div>
+                            <div class=" flex-fill">
+                                <p>Địa điểm</p>
+                                <span>{{ jd.location }}</span>
+                            </div>
+                        </div>
+
+                        <div class="job__desc--item flex-fill d-flex">
+                            <div class=" flex-fill"><i class="fi fi-sr-hourglass-start"></i></div>
+                            <div class=" flex-fill">
+                                <p>Kinh nghiệm</p>
+                                <span>{{ jd.experience_year }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <span class="job__time">
+                        <i class="fi fi-sr-clock"></i>
+                        Hạn nộp hồ sơ {{ jd.deadline|date:'d-m-Y' }}
+                    </span>
+                    {% if not perms.company.view_company %}
+                        <div class="job__button pt-4 d-flex ">
+                            {% if not has_applied %}
+                                <button onclick="applyJob({{ request.user.id }}, {{ jd.id }})"
+                                        class="btn-apply job__button--apply text-light">
+                                    <i class="fi container fi-rs-paper-plane "></i>Ứng tuyển ngay
+                                </button>
+                                <button class="job__button--save"><i class="fi container fi-rs-heart"></i>Lưu tin</button>
+                            {% else %}
+                                <button class="job__button--save ms-auto"><i class="fi container fi-rs-heart"></i>Lưu tin</button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="info  mt-4">
+                    <h3 class="detail-job-h3">Chi tiết tin tuyển dụng</h3>
+                    <h4 class="detail-job-h4">Mô tả công việc</h4>
+                    {{ jd.description|safe }}
+                    <h4 class="detail-job-h4">Yêu cầu ứng viên</h4>
+                    {{ jd.requirements|safe }}
+                    <h4 class="detail-job-h4">Quyền lợi</h4>
+                    {{ jd.benefits|safe }}
+                    <h4 class="detail-job-h4">Cách thức ứng tuyển</h4>
+                    <p>Ứng viên nộp hồ sơ trực tuyến bằng cách bấm <span class="fw-bold">Ứng tuyển</span> ngay dưới đây.
+                    </p>
+                    {% if not perms.company.view_company %}
+                        <div class="info__button pt-3">
+                            {% if not has_applied %}
+                                <button>Ứng tuyển</button>
+                            {% endif %}
+                            <button>Lưu tin</button>
+                        </div>
+                    {% endif %}
+                    <p class="pt-3 pb-3">Hạn nộp hồ sơ {{ jd.deadline|date:'d-m-Y' }}</p>
+                    <div class="alert alert-info">
+                        <i class="fw-bold fi-sr-comment-info"></i>
+                        Báo cáo tin tuyển dụng: Nếu bạn thấy rằng tin tuyển dụng này không đúng hoặc có dấu hiệu lừa
+                        đảo,
+                        <span class="fw-bold">hãy phản ánh với chúng tôi.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content__right col-4">
+                <div class="company">
+                    <div class="company__head pt-3 container">
+                        <div class="d-flex">
+                            <img src="https://vietbrands.vn/wp-content/uploads/2019/01/Thi%E1%BA%BFt-k%E1%BA%BF-logo-c%C3%B4ng-ty-xnk.jpg"
+                                 alt="">
+                            <p data-bs-toggle="tooltip">{{ jd.company.company_name }}</p>
+                        </div>
+
+                    </div>
+                    <div class="company__body">
+                        <div>
+                            <span><i class="fi fi-rr-users"></i>Quy mô: {{ jd.company.number_of_employees }} nhân viên</span>
+                        </div>
+                        <div class="pt-4 pb-4">
+                            <span><i class="fi fi-rr-marker"></i>Địa điểm: {{ jd.company.address }}</span>
+                        </div>
+                    </div>
+                    <a class="container pt-3 d-flex justify-content-center fw-bold" href="{% url 'company_detail' jd.company.account.id %}">Xem
+                        trang công ty</a>
+                </div>
+                <div class="info2 contain mt-3 pt-4">
+                    <h3 class="detail-job-h3" style="margin-left: 12px;">Thông tin chung</h3>
+                    <div class="info2__item d-flex">
+                        <i class="fi fi-rr-square-star"></i>
+                        <p><span class="fw-bold">Cấp bậc: </span>{{ jd.position }}</p>
+                    </div>
+                    <div class="info2__item d-flex">
+                        <i class="fi fi-br-hourglass-end"></i>
+                        <p><span class="fw-bold">Kinh nghiệm: </span>{{ jd.experience_year }}</p>
+                    </div>
+                    <div class="info2__item d-flex">
+                        <i class="fi fi-rr-users-alt"></i>
+                        <p><span class="fw-bold">Số lượng tuyển: </span>{{ jd.number_of_recruits }}</p>
+                    </div>
+                    <div class="info2__item d-flex">
+                        <i class="fi fi-rr-briefcase"></i>
+                        <p><span class="fw-bold">Hình thức làm việc: </span>{{ jd.work_form.value }}</p>
+                    </div>
+                    <div class="info2__item d-flex">
+                        <i class="fa-solid fa-user"></i>
+                        <p><span class="fw-bold">Giới tính: </span>{{ jd.gender.value }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

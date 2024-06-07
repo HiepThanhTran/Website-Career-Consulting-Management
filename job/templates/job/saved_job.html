@@ -1,0 +1,36 @@
+{% extends 'layout/base_hf.html' %}
+
+{% block title %} Việc làm đã lưu {% endblock %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'job/css/reset.css' %}" type="text/css"/>
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'job/css/saved_job.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'job/css/style.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="box d-flex justify-content-center">
+            <div class="box__left col-8">
+                <div class="tittle">
+                    <img src="{% static 'job/images/bg.jpg' %}" alt="">
+                    <div class="tittle__box container">
+                        <h3 class="text-light">Việc làm đã lưu</h3>
+                        <p class=" pt-3">Xem lại danh sách những việc làm mà bạn đã lưu trước đó. Ứng tuyển ngay để không bỏ lỡ cơ hội nghề
+                            nghiệp dành cho bạn.</p>
+                    </div>
+                </div>
+                <div class="jobapply">
+                    <div class="jobapply__tittle">
+                        <img src="{% static 'job/images/lsut/1.png' %}" alt="">
+                        <p>Bạn chưa lưu công việc nào!</p>
+                        <button type="button" class="btn btn-info mt-4">Tìm việc ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

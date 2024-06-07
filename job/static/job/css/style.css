@@ -1,0 +1,269 @@
+* {
+    box-sizing: border-box;
+}
+
+* a {
+    text-decoration: none;
+}
+
+h3 {
+    color: #38aecc;
+    font-weight: bold;
+}
+
+body {
+    padding-top: 72px;
+    background-color: #d8e9f7;
+    color: #022f40;
+}
+
+.box {
+    width: 80%;
+    margin: 50px auto;
+}
+
+.box__left {
+    margin-right: 20px;
+}
+
+.tittle {
+    position: relative;
+}
+
+.tittle img {
+    height: 200px;
+    width: 100%;
+    display: block;
+}
+
+.tittle__box {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 2;
+    color: #d8e9f7;
+}
+
+/* ---------------------Banner */
+.banner {
+    background-color: #022f40;
+    height: 66px;
+    width: 100%;
+}
+
+.banner__button {
+    width: 100%;
+    margin: 0 auto;
+    padding: 8px;
+}
+
+.banner__button-search {
+    margin-right: 20px;
+}
+
+.banner__button .mt-3 {
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.banner__button-location {
+    height: 300px;
+    overflow: auto;
+    /* Track */
+    /* Handle */
+}
+
+.banner__button-location::-webkit-scrollbar {
+    width: 5px;
+}
+
+.banner__button-location::-webkit-scrollbar-track {
+    background-color: #fafafa;
+}
+
+.banner__button-location::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: #38aecc;
+}
+
+.banner__button-location::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: #38aecc;
+}
+
+.banner__button i {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #38aecc;
+}
+
+.banner__button-search {
+    background-color: #fff;
+}
+
+.banner__button-search input {
+    outline: none;
+    border: none;
+    border-right: 2px solid black;
+    padding: 5px;
+}
+
+.banner .dropdown-item {
+    padding: 10px;
+}
+
+.banner .btn-search {
+    background-color: #38aecc;
+    border: none;
+    height: 50px;
+}
+
+.banner input[type=number]::-webkit-inner-spin-button,
+.banner input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.banner input[type=number] {
+    width: 70px;
+    outline: none;
+    margin: 0 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #38aecc;
+}
+
+.banner__info {
+    width: 60%;
+    margin: 0 auto;
+    color: #d8e9f7;
+}
+
+.banner__info span {
+    font-weight: bold;
+    color: #38aecc;
+}
+
+/* ---------------------EndBanner */
+/* Profile Bảng bên phải */
+.profile {
+    box-shadow: 2px 2px 3px rgb(128, 128, 128);
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+.profile p {
+    margin-bottom: 10px;
+}
+.profile span{
+    margin-bottom:10px;
+}
+.profile-info {
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px #d8e9f7;
+    margin: 10px;
+}
+
+.profile-info img {
+    width: 30%;
+    height: 30%;
+    display: flex;
+    border-radius: 50%;
+}
+
+.profile-info > .icon {
+    position: absolute;
+    bottom: 16px;
+    right: 224px;
+}
+
+.profile-info span {
+    margin-top: 5px;
+    text-align: left;
+}
+.profile-confirm {
+    padding: 7px;
+    background-color: #d8e9f7;
+    border-radius: 10px;
+    text-align: center !important;
+}
+
+.profile-info a i {
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+    top: 0;
+    right: 0;
+}
+/*  */
+.goodjob {
+    border-radius: 15px;
+    padding-bottom: 30px;
+    background-color: #fff;
+}
+
+.goodjob__item {
+    padding: 20px;
+    margin: 20px;
+    background-color: rgb(245, 242, 237);
+    position: relative;
+    border-radius: 15px;
+}
+
+.goodjob__item img {
+    width: 20%;
+    object-fit: contain;
+    height: 20%;
+}
+
+.goodjob__item p {
+    padding: 5px;
+}
+
+.goodjob__item span {
+    padding: 10px;
+    background-color: #d8e9f7;
+    font-size: 12px;
+    opacity: 0.8;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.goodjob__item button {
+    background-color: #38aecc;
+    height: 35px;
+    color: #d8e9f7;
+}
+
+.goodjob__item i {
+    padding: 7px;
+    color: #38aecc;
+    border-radius: 50%;
+}
+
+.goodjob__item .slr {
+    background-color: transparent;
+    font-weight: bold;
+    color: #38aecc;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.goodjob__button{
+    right:0;
+    position: relative;
+}
+.goodjob__button i{
+    margin-left:5px;
+}
+
+.goodjob button:last-child {
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+    background-color: #38aecc;
+}
+
