@@ -51,7 +51,7 @@ DATABASES = {
 }
 ```
 
-## Usage
+## Run locally
 - After that just run project in localhost with the following command in terminal:
 
 HTTP Protocol
