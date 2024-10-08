@@ -1,12 +1,12 @@
-# BlueCC - Blue Career Consult
+# CareersFlux - Career Consulting Management System
 
-BlueCC is a project using Django Framework of our group in the Information System Security subject
+CareersFlux is a project using Django Framework of our group in the Information System Security subject
 
 ## Installation
 1. Clone the project:
 
 ```bash
-git clone https://github.com/HiepThanhTran/Career-Consulting.git
+git clone https://github.com/HiepThanhTran/CareersFlux-Website.git
 ```
 
 2. Create Virtual Environment:
