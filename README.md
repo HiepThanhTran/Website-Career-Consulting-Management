@@ -15,13 +15,19 @@ git clone https://github.com/HiepThanhTran/CareersFlux-Website.git
 python -m venv venv
 ```
 
-3. Install dependencies from requirements.txt
+3. Activate the environment
+
+```bash
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+```
+
+4. Install dependencies from requirements.txt
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Makemigration and migrate database:
+5. Makemigration and migrate database:
 ```bash
 python manage.py makemigrations
 python manage.py migrate
