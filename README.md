@@ -1,4 +1,4 @@
-# CareersFlux - Career Consulting Management
+# CareersFlux - Career Consulting
 
 CareersFlux is a project using Django Framework of our group in the Information System Security subject
 
